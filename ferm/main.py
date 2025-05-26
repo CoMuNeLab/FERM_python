@@ -7,7 +7,7 @@ import rioxarray
 from multiprocessing import Pool
 
 
-from utils import sample_max_distribution, gaussian_distribution_max
+from ferm.utils import sample_max_distribution, gaussian_distribution_max
 
 #### Compute niche which gives the mean of the gaussian algorithm
 
@@ -37,10 +37,19 @@ def wrap_geodist(a,b):
     return geodist(a,b,metric='km')
 
 
-def FERM(path_niche_array,path_x,path_y,path_pop):
+def FERM(
+    nb_particules: int,
+    sigma: float,
+    path_niche_array: str,
+    path_x: str,
+    path_y: str,
+    path_pop: str
+        ) -> None:
+    
     df_pop = rioxarray.open_rasterio(path_pop)
-    array_niche = np.load(path_niche_array) #array of niche index corresponds to index in x_pop,y_pop
-    x_pop = np.load(path_x) # longitude coordiantes
+    # array of niche index corresponds to index in x_pop,y_pop
+    array_niche = np.load(path_niche_array)
+    x_pop = np.load(path_x)  # longitude coordiantes
     y_pop = np.load(path_y) # latitude coordiantes
     #print(len(x_pop),len(y_pop),array_niche.shape)
     array_niche = precise_the_mask(-40, 47, 4, x_pop, y_pop, array_niche)
@@ -171,21 +180,21 @@ def precise_the_mask(xmin,xmax,ymin,x_pop,y_pop,array_niche):
     return array_niche
 
 ############LOAD DATA#########################################################
-nb_particules = 100
-sigma = 1
-path_niche_array = "../data/charley/array_of_niche_to_pop_outest.npy"
-path_x = "../data/charley/x_pop.npy"
-path_y = "../data/charley/y_pop.npy"
-path_pop = "../data/charley/pop_test.tif"
+# nb_particules = 100
+# sigma = 1
+# path_niche_array = "../data/test_data/array_of_niche_to_pop_outest.npy"
+# path_x = "../data/test_data/x_pop.npy"
+# path_y = "../data/test_data/y_pop.npy"
+# path_pop = "../data/test_data/pop_test.tif"
 
-import warnings
-warnings.filterwarnings("ignore")
+# import warnings
+# warnings.filterwarnings("ignore")
 
 
     
     
 #######################RUN#############################
-FERM(path_niche_array,path_x,path_y,path_pop)
+# FERM(path_niche_array,path_x,path_y,path_pop)
 # =============================================================================
 # P_final = multiprocessing(path_niche_array,path_x,path_y,path_pop)
 # P_final = P_final.tocsr()
