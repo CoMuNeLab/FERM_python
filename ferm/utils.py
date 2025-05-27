@@ -3,7 +3,7 @@ from scipy import stats
 from arspy.ars import adaptive_rejection_sampling
 
 
-def sample_max_distribution(mu_x,sigma, pop, alpha):
+def sample_max_distribution(mu_x, sigma, pop, alpha):
     """ Compute boundaries and sample max distributions """
     mm = (np.sqrt(np.log(pop**2 / (2 * np.pi * np.log(pop**2 / (2 * np.pi))))) * (1 + 0.5772156649 / np.log(pop))) * sigma + mu_x
     ss = np.sqrt(sigma**2 * np.pi**2 / (12 * np.log(pop)))
@@ -13,10 +13,12 @@ def sample_max_distribution(mu_x,sigma, pop, alpha):
     
     return low, up
 
-def gaussian_distribution_max(sigma,mu,n):
-    #print("n= ", n)
-    #print("mu",mu)
-    "Sample the maximum of n gaussian distributions with Adaptative rejection sampling"
+def gaussian_distribution_max(
+        sigma: float, 
+        mu: float, 
+        n: int
+        ) -> float:
+    """"Sample the maximum of n gaussian distributions with Adaptative rejection sampling"""
     if n <=5: #in case of small population make it naive way to avoid problem of boundaries in the rejection algorithm
         return np.max(stats.norm.rvs(loc=mu,scale=sigma,size=n))
     else:

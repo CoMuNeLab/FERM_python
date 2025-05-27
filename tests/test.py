@@ -1,10 +1,9 @@
 from ferm import FERM 
 
 
-
 ############LOAD DATA#########################################################
 nb_particules = 100
-sigma = 1
+sigma = 1.0
 path_niche_array = "../data/test_data/array_of_niche_to_pop_outest.npy"
 path_x = "../data/test_data/x_pop.npy"
 path_y = "../data/test_data/y_pop.npy"

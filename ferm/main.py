@@ -167,7 +167,7 @@ def multiprocessing(path_niche_array,path_x,path_y,path_pop):
         P_final[i] = result[i]
     return P_final
 
-def precise_the_mask(xmin,xmax,ymin,x_pop,y_pop,array_niche):
+def precise_the_mask(xmin, xmax, ymin, x_pop, y_pop, array_niche):
     x_cut = np.where(x_pop <=xmax,x_pop,abs(x_pop*0))
     x_cut = np.where(x_cut >=xmin,x_cut,abs(x_cut*0))
     y_cut = np.where(y_pop >=ymin,y_pop,abs(y_pop*0))
