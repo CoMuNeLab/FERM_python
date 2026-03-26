@@ -15,9 +15,16 @@ mask_x = None
 mask_y = None
 points = None
 
-def FERM(path_niche_array: str, path_x: str, path_y: str, path_pop: str,
-         nb_particules: int = 100, sigma: float = 1.0,
-         save_path: str = "pop=test_sparse_mobility_mat.npz") -> None:
+def FERM(
+        path_niche_array: str, 
+        path_x: str, 
+        path_y: str, 
+        path_pop: str,
+        nb_particules: int = 100, 
+        sigma: float = 1.0,
+        save_path: str = "pop=test_sparse_mobility_mat.npz",
+        verbose: bool = False,
+        ) -> None:
     """
     Run the FERM simulation and save the resulting mobility matrix.
 
@@ -45,13 +52,15 @@ def FERM(path_niche_array: str, path_x: str, path_y: str, path_pop: str,
     x_pop_local = np.load(path_x)
     y_pop_local = np.load(path_y)
 
-    array_niche_local = precise_the_mask(-40, 47, 4, x_pop_local, y_pop_local, array_niche_local)
+    array_niche_local = precise_the_mask(
+        -40, 47, 4, x_pop_local, y_pop_local, array_niche_local)
     mask_local = np.where(array_niche_local != 0)
     mask_x, mask_y, points = parse_lat_lon(mask_local, x_pop_local, y_pop_local)
 
     P_final = sp.lil_matrix((len(mask_x), len(mask_x)))
 
     for i in range(len(mask_x)):
+        if verbose: print(f"{i} out of {len(mask_x)}")
         p1 = np.array(points[i])
         x_current = mask_local[0][i]
         y_current = mask_local[1][i]
